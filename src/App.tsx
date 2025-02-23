@@ -74,7 +74,7 @@ function App() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 group cursor-pointer">
-              <Shield className="w-6 h-6 group-hover:animate-pulse" />
+              <img src="/logo.png" alt="CCC Logo" className="w-8 h-8" />
               <span className="text-xl font-bold group-hover:text-blue-400 transition-colors">CCC</span>
             </div>
             <div className="flex space-x-6">
@@ -94,24 +94,38 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <div className="h-screen flex items-center justify-center relative overflow-hidden">
+      <div className="h-screen flex items-center justify-between relative overflow-hidden">
         <div className="absolute inset-0 bg-hacker opacity-10"></div>
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 animate-text-glow">
-            CBIT Cyber Security Club
-          </h1>
-          <p className="text-blue-400/80 text-xl md:text-2xl max-w-3xl mx-auto typing-animation">
-            Exploring the depths of cybersecurity, one byte at a time
-          </p>
-          <div className="mt-12">
-            <button
-              onClick={() => scrollToSection('about')}
-              className="px-8 py-3 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg border border-blue-500/30 
-                         hover:border-blue-500/60 transition-all duration-300 group"
-            >
-              <span className="group-hover:tracking-wider transition-all duration-300">ENTER_SYSTEM</span>
-            </button>
+        <div className="container mx-auto px-8 relative z-10 flex items-center justify-between">
+          <div className="w-1/2 text-left pr-8">
+            <img
+              src="/logo.png"
+              alt="CCC Logo"
+              className="w-24 h-24 mb-4 animate-bounce"
+            />
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-4 animate-text-glow tracking-wide dark-blue-shine">
+              CBIT <br /> Cyber Security <br /> Club
+            </h1>
+            <p className="text-blue-400/80 text-lg md:text-xl max-w-lg typing-animation font-light">
+              Exploring the depths of cybersecurity, one byte at a time
+            </p>
+            <div className="mt-8">
+              <button
+                onClick={() => scrollToSection('about')}
+                className="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg border border-blue-500/30 
+                           hover:border-blue-500/60 transition-all duration-300 group animate-pulse"
+              >
+                <span className="group-hover:tracking-wider transition-all duration-300">ENTER_SYSTEM</span>
+              </button>
+            </div>
+          </div>
+          <div className="w-1/2 h-full flex items-center justify-center pl-8">
+            <img
+              src="/hacker.png"
+              alt="Hacker"
+              className="w-3/4 h-auto rounded-lg shadow-lg"
+            />
           </div>
         </div>
       </div>
@@ -369,6 +383,22 @@ function App() {
           100% {
             clip: rect(44px, 450px, 56px, 0);
             transform: skew(-0.5deg);
+          }
+        }
+
+        .dark-blue-shine {
+          background: linear-gradient(90deg, #1e3a8a, #0f172a);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shine 3s infinite linear;
+        }
+
+        @keyframes shine {
+          0% {
+            background-position: -200%;
+          }
+          100% {
+            background-position: 200%;
           }
         }
       `}</style>
