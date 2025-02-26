@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, Users, Calendar, Info, Mail, ChevronRight, Shield, ExternalLink, Menu, X, ArrowLeft, Flag, Box, Users2, Instagram, Linkedin } from 'lucide-react';
 import { LampContainer } from './components/ui/lamp';
 import { motion } from 'framer-motion';
+import { GlitchCard } from './components/ui/glitch-card';
+import { TerminalInteraction } from './components/ui/terminal-interaction';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -481,12 +483,12 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
                   {/* Tectasy Events */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {events.upcoming[0].subEvents.map((subEvent, index) => (
-                      <div
+                      <GlitchCard
                         key={index}
+                        className="cursor-pointer"
                         onClick={() => setSelectedEvent({ event: events.upcoming[0], subEvent })}
-                        className="group cursor-pointer"
                       >
-                        <div className="border border-blue-500/30 rounded-lg overflow-hidden bg-navy-800/60 hover:bg-navy-800/80 transition-all duration-300">  {/* Added background colors */}
+                        <div className="border border-blue-500/30 rounded-lg overflow-hidden bg-navy-800/60 h-full">
                           <div className="h-48 relative">
                             <img
                               src={subEvent.image}
@@ -511,7 +513,7 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </GlitchCard>
                     ))}
                   </div>
                 </div>
@@ -683,6 +685,8 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
         </div>
       </footer>
 
+      <TerminalInteraction />
+
       <style>{`
         .bg-gradient-text {
           background: linear-gradient(to right, #fff, #93c5fd);
@@ -781,6 +785,81 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
         
         .text-pink-400, .text-blue-500 {
           animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes glitch-overlay {
+          0% { opacity: 0; }
+          5% { opacity: 0.3; }
+          10% { opacity: 0; }
+          15% { opacity: 0.3; }
+          20% { opacity: 0; }
+          55% { opacity: 0; }
+          60% { opacity: 0.3; }
+          65% { opacity: 0; }
+          100% { opacity: 0; }
+        }
+        
+        .animate-glitch-overlay {
+          animation: glitch-overlay 2s infinite;
+        }
+        
+        .glitch-scan {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background: rgba(59, 130, 246, 0.5);
+          opacity: 0.7;
+          box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+          animation: scan 2s linear infinite;
+        }
+        
+        @keyframes scan {
+          0% { top: 0; }
+          100% { top: 100%; }
+        }
+        
+        .animate-terminal-appear {
+          animation: terminal-appear 0.3s ease-out;
+        }
+        
+        @keyframes terminal-appear {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes matrix-rain {
+          0% { 
+            transform: translateY(-100%);
+            opacity: 0; 
+          }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { 
+            transform: translateY(1000%);
+            opacity: 0; 
+          }
+        }
+        
+        .matrix-container {
+          overflow: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+          pointer-events: none;
+        }
+        
+        .matrix-rain {
+          position: absolute;
+          color: #0f0;
+          font-family: "Courier New", monospace;
+          font-size: 1.2rem;
+          font-weight: bold;
+          animation: matrix-rain 8s linear infinite;
         }
       `}</style>
     </div>
