@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Terminal, Users, Calendar, Info, Mail, ChevronRight, Shield, ExternalLink, Menu, X, ArrowLeft, Flag, Box, Users2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Terminal, Users, Calendar, Info, Mail, ChevronRight, Shield, ExternalLink, Menu, X, ArrowLeft, Flag, Box, Users2, Instagram, Linkedin } from 'lucide-react';
+import { LampContainer } from './components/ui/lamp';
+import { motion } from 'framer-motion';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showPastEvents, setShowPastEvents] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -130,115 +133,194 @@ function App() {
     };
   }, []);
 
-  const events = [
-    {
-      id: 'tectasy-2k25',
-      title: "CCC × Tectasy 2k25",
-      date: "March 20-22, 2024",
-      description: "A three-day cybersecurity extravaganza featuring multiple challenging events.",
-      isCollab: true,
-      subEvents: [
-        {
-          title: "Capture The Flag",
-          description: "Test your hacking skills in this intense CTF competition. Hunt for flags, crack codes, and prove your expertise.",
-          icon: Flag
-        },
-        {
-          title: "Spell The Box",
-          description: "Break into carefully crafted black boxes. Each level brings new challenges and security mechanisms to bypass.",
-          icon: Box
-        },
-        {
-          title: "Cyber Imposter",
-          description: "A social engineering challenge where participants must identify the imposter while protecting their own identity.",
-          icon: Users2
-        }
-      ],
-      registerLink: "https://forms.example.com/tectasy-2k25"
-    },
-    {
-      id: 'ethical-hacking',
-      title: "Ethical Hacking Workshop",
-      date: "April 15, 2024",
-      description: "Learn the basics of ethical hacking and penetration testing.",
-      registerLink: "https://forms.example.com/ethical-hacking",
-      fullDescription: `Join us for an intensive hands-on workshop on ethical hacking and penetration testing. 
-      Learn from industry experts about:
-      • Network Security
-      • Web Application Security
-      • Mobile Security
-      • Social Engineering
-      Limited seats available!`
-    },
-    {
-      id: 'cybersecurity-seminar',
-      title: "Cybersecurity Seminar",
-      date: "May 5, 2024",
-      description: "Industry experts share insights on latest security trends.",
-      registerLink: "https://forms.example.com/cybersecurity-seminar",
-      fullDescription: `A comprehensive seminar featuring top cybersecurity experts discussing:
-      • Zero Trust Architecture
-      • Cloud Security
-      • AI in Cybersecurity
-      • Threat Intelligence
-      Network with industry professionals!`
-    }
-  ];
+  const events = {
+    upcoming: [
+      {
+        id: 'tectasy-2k25',
+        title: "CCC × Tectasy 2k25",
+        date: "March 4-5, 2024",
+        image: "/events/ctf.png", // Add event image
+        description: "A three-day cybersecurity extravaganza featuring multiple challenging events.",
+        isCollab: true,
+        subEvents: [
+          {
+            title: "Capture The Flag",
+            shortDescription: "Test your hacking skills in this intense CTF competition.",
+            description: `Are you ready to test your cybersecurity skills and outsmart the competition? Our CTF Challenge features exciting challenges in cryptography, web security, reverse engineering, forensics, and more!
+
+**Team Size:** 2 members
+**Venue:** IT LABS 5 and 6
+**Registration Fee:** 
+• ₹49 per person
+• ₹99 per team
+
+**Prizes:**
+• 🥇 Winner: ₹1500
+• 🥈 Runner-up: ₹500`,
+            icon: Flag,
+            image: "/src/events/ctf.png" // Updated image path
+          },
+          {
+            title: "Spell The Box",
+            description: `Wands at the ready! ⚡✨ The Spell Box event is a magical journey filled with Hogwarts vibes, enchanting quizzes, and spellbinding challenges!
+
+Registration Fee:
+₹29/- Per person
+₹49/- Per team of 2
+
+Venue: Near Library Lane`,
+            icon: Box,
+            image: "/src/events/spellbox.png" // Added image path
+          },
+          {
+            title: "Cyber Imposter",
+            description: `Step into the world of deception, deduction, and cybersecurity!
+
+Round 1: Imposter Hunt – Unmask the fake teammate
+Round 2: Hacker Among Us – Crack ciphers, decode messages, and defend your system
+
+Team Size: 4 Members
+Open to: 1st & 2nd Years
+Venue: IT Block (L Block)
+Date: March 4-5, 2024`,
+            icon: Users2,
+            image: "/src/events/cyberimposter.png" // Added image path
+          }
+        ],
+        registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSddT-cmUEd8I4Q7N2RbSLIpFzlhi4VF2V9ZzKmIaQwtq4QweA/viewform"
+      }
+    ],
+    past: [
+      {
+        id: 'debugging-duel',
+        title: "Debugging Duel",
+        date: "October 3, 2024",
+        description: "In a world full of threats… only the smartest will survive.",
+        image: "/events/debugging-duel.jpg", // Add an image if you have one
+        fullDescription: `Greetings from CCC!
+Get Ready for The *Debugging Duel* 🔐👨🏻‍💻
+Are you passionate about coding, cryptography, and cybersecurity? Then this is the challenge for you! 💻⚡
+
+🛠️ Event: Debugging Duel
+🗓 Date: 03rd October 2024 (Thursday)
+🏆 Levels: 3 exciting rounds of programming, cryptography, and cybersecurity challenges!
+💰 Registration Fee: Absolutely FREE!
+🔗 Register Now: https://forms.gle/3EWQRh7UH3RnxYLb6
+
+For more details:
+Manobhiram- 9391468489
+Gayatri- 7680871908
+
+The Debugging Duel is here to test your coding, cryptography, and debugging skills across 3 exciting levels! Do you have what it takes to rise to the top?`,
+        registerLink: "https://forms.gle/3EWQRh7UH3RnxYLb6",
+      },
+      {
+        id: 'ethical-hacking',
+        title: "Ethical Hacking Workshop",
+        date: "January 15, 2024",
+        image: "/events/ethical-hacking.jpg",
+        description: "Learn the basics of ethical hacking and penetration testing.",
+        fullDescription: `Join us for an intensive hands-on workshop on ethical hacking and penetration testing. 
+        Learn from industry experts about:
+        • Network Security
+        • Web Application Security
+        • Mobile Security
+        • Social Engineering
+        Limited seats available!`
+      },
+      {
+        id: 'cybersecurity-seminar',
+        title: "Cybersecurity Seminar",
+        date: "May 5, 2024",
+        description: "Industry experts share insights on latest security trends.",
+        registerLink: "https://forms.example.com/cybersecurity-seminar",
+        fullDescription: `A comprehensive seminar featuring top cybersecurity experts discussing:
+        • Zero Trust Architecture
+        • Cloud Security
+        • AI in Cybersecurity
+        • Threat Intelligence
+        Network with industry professionals!`
+      }
+    ]
+  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    const headerOffset = 100; // Adjust this value based on your header height
+    if (element) {
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
     setIsMenuOpen(false);
   };
 
-  const EventModal = ({ event, subEvent, onClose }) => (
-    <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-navy-900 border border-blue-500/30 rounded-lg max-w-2xl w-full">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <button 
-              onClick={() => {
-                onClose();
-                setTimeout(() => scrollToSection('events'), 100);
-              }}
-              className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors"
+  const EventModal = ({ event, subEvent, onClose }) => {
+    const modalRef = useRef();
+
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (modalRef.current && !modalRef.current.contains(event.target)) {
+          onClose();
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [onClose]);
+
+    return (
+      <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 mt-16">
+        <div ref={modalRef} className="bg-navy-900 border border-blue-500/30 rounded-lg max-w-2xl w-full">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <button 
+                onClick={() => {
+                  onClose();
+                  setTimeout(() => scrollToSection('events'), 100);
+                }}
+                className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back to Events</span>
+              </button>
+            </div>
+            <h3 className="text-3xl font-bold mb-4">{subEvent ? subEvent.title : event.title}</h3>
+            <p className="text-blue-400/80 mb-6 text-lg">{event.date}</p>
+            
+            {subEvent ? (
+              <div className="prose prose-invert mb-8">
+                <p className="whitespace-pre-line text-blue-400/80 text-lg leading-relaxed">
+                  {subEvent.description}
+                </p>
+              </div>
+            ) : (
+              <div className="prose prose-invert mb-8">
+                <p className="whitespace-pre-line text-blue-400/80 text-lg leading-relaxed">
+                  {event.fullDescription}
+                </p>
+              </div>
+            )}
+            
+            <a 
+              href={event.registerLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-2 bg-blue-500/20 hover:bg-blue-500/30 px-8 py-4 rounded-lg
+                       transition-all duration-300 border border-blue-500/30 hover:border-blue-500/60
+                       hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] group"
             >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Back to Events</span>
-            </button>
+              <span className="text-lg group-hover:tracking-wider transition-all duration-300">Register Now</span>
+              <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </a>
           </div>
-          <h3 className="text-3xl font-bold mb-4">{subEvent ? subEvent.title : event.title}</h3>
-          <p className="text-blue-400/80 mb-6 text-lg">{event.date}</p>
-          
-          {subEvent ? (
-            <div className="prose prose-invert mb-8">
-              <p className="whitespace-pre-line text-blue-400/80 text-lg leading-relaxed">
-                {subEvent.description}
-              </p>
-            </div>
-          ) : (
-            <div className="prose prose-invert mb-8">
-              <p className="whitespace-pre-line text-blue-400/80 text-lg leading-relaxed">
-                {event.fullDescription}
-              </p>
-            </div>
-          )}
-          
-          <a 
-            href={event.registerLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 bg-blue-500/20 hover:bg-blue-500/30 px-8 py-4 rounded-lg
-                     transition-all duration-300 border border-blue-500/30 hover:border-blue-500/60
-                     hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] group"
-          >
-            <span className="text-lg group-hover:tracking-wider transition-all duration-300">Register Now</span>
-            <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-          </a>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen bg-navy-900 text-white font-sans">
@@ -325,11 +407,11 @@ function App() {
       {/* About Section */}
       <section id="about" className="py-32 fade-in">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <h2 className="text-4xl font-bold mb-6 flex items-center justify-center glitch-text">
+            <Info className="mr-2" /> About CCC
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center p-8 bg-navy-800/50 rounded-lg border border-blue-500/30">
             <div className="space-y-6">
-              <h2 className="text-4xl font-bold mb-6 flex items-center glitch-text">
-                <Info className="mr-2" /> About CCC
-              </h2>
               <p className="text-blue-400/80 leading-relaxed text-lg">
                 The CBIT Cyber Security Club (CCC) is a student-led organization dedicated to promoting cybersecurity awareness
                 and skills development. We organize workshops, competitions, and seminars to help students explore the fascinating
@@ -349,105 +431,166 @@ function App() {
       </section>
 
       {/* Events Section */}
-      <section id="events" className="py-32 bg-navy-900/50 fade-in">
+      <section id="events" className="py-32 bg-navy-900/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-16 flex items-center glitch-text">
+          <h2 className="text-4xl font-bold mb-16 flex items-center justify-center glitch-text">
             <Calendar className="mr-2" /> Events
           </h2>
-
-          {/* Highlighted Tectasy Events */}
-          <div className="mb-16">
-            <h3 className="text-5xl font-extrabold text-center mb-4 text-blue-400 animate-text-glow">
-              SUDHEE 2k25
-            </h3>
-            <h4 className="text-3xl font-bold text-center mb-8 text-blue-300">
-              CBITCCC X TECTASY 2k25
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {events.find(event => event.id === 'tectasy-2k25').subEvents.map((subEvent, index) => (
-                <div
-                  key={index}
-                  onClick={() => setSelectedEvent({ event: events.find(event => event.id === 'tectasy-2k25'), subEvent })}
-                  className="group cursor-pointer"
-                >
-                  <div className="border border-blue-500/30 rounded-lg p-6 bg-gradient-to-br from-navy-800/80 to-blue-900/60
-                                  transform hover:scale-[1.02] transition-all duration-300
-                                  hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] backdrop-blur-sm">
-                    <div className="flex items-center mb-3">
-                      <subEvent.icon className="w-6 h-6 text-blue-400 mr-3" />
-                      <h3 className="text-xl font-bold group-hover:text-blue-400 transition-colors">
-                        {subEvent.title}
-                      </h3>
-                    </div>
-                    <p className="text-blue-400/80">{subEvent.description}</p>
-                    <div className="mt-4 flex items-center text-blue-400/60 group-hover:text-blue-400 transition-colors">
-                      <span>Learn More</span>
-                      <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Other Events */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {events.filter(event => event.id !== 'tectasy-2k25').map((event) => (
-              <div
-                key={event.id}
-                onClick={() => setSelectedEvent(event)}
-                className="group cursor-pointer"
-              >
-                <div className={`border border-blue-500/30 rounded-lg p-6
-                              transform hover:scale-[1.02] transition-all duration-300
-                              hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]
-                              ${event.isCollab ? 'bg-gradient-to-br from-navy-800/80 to-blue-900/60' : 'bg-navy-800/60'} 
-                              backdrop-blur-sm`}>
-                  {event.isCollab && (
-                    <div className="flex items-center mb-3">
-                      <span className="text-xs font-semibold px-2 py-1 rounded-full bg-blue-500/20 text-blue-300">
-                        COLLABORATION
-                      </span>
-                    </div>
-                  )}
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors">
-                    {event.title}
-                  </h3>
-                  <p className="text-blue-400/60 mb-2">{event.date}</p>
-                  <p className="text-blue-400/80">{event.description}</p>
-                  <div className="mt-4 flex items-center text-blue-400/60 group-hover:text-blue-400 transition-colors">
-                    <span>Learn More</span>
-                    <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
-                  </div>
-                </div>
+          <LampContainer className="min-h-fit py-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.2,
+                duration: 0.5,
+              }}
+              className="container mx-auto px-4 relative z-50 mt-2" // Changed from mt-20 to mt-10
+            >
+              <div className="text-center mb-16">
+                <h3 className="text-5xl font-extrabold text-blue-400 animate-text-glow mb-4">
+                  SUDHEE 2k25
+                </h3>
+                <h4 className="text-3xl font-bold text-blue-300">
+                  CBITCCC X TECTASY 2k25
+                </h4>
               </div>
-            ))}
-          </div>
+
+              {/* Events Toggle */}
+              <div className="flex justify-center mb-12 gap-4">
+                <button
+                  onClick={() => setShowPastEvents(false)}
+                  className={`px-6 py-2 rounded-lg transition-all duration-300 ${
+                    !showPastEvents ? 'bg-blue-500/30 text-white' : 'text-blue-400/60'
+                  }`}
+                >
+                  Upcoming Events
+                </button>
+                <button
+                  onClick={() => setShowPastEvents(true)}
+                  className={`px-6 py-2 rounded-lg transition-all duration-300 ${
+                    showPastEvents ? 'bg-blue-500/30 text-white' : 'text-blue-400/60'
+                  }`}
+                >
+                  Past Events
+                </button>
+              </div>
+
+              {!showPastEvents ? (
+                /* Upcoming Events */
+                <div className="mb-16">
+                  {/* Tectasy Events */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {events.upcoming[0].subEvents.map((subEvent, index) => (
+                      <div
+                        key={index}
+                        onClick={() => setSelectedEvent({ event: events.upcoming[0], subEvent })}
+                        className="group cursor-pointer"
+                      >
+                        <div className="border border-blue-500/30 rounded-lg overflow-hidden bg-navy-800/60 hover:bg-navy-800/80 transition-all duration-300">  {/* Added background colors */}
+                          <div className="h-48 relative">
+                            <img
+                              src={subEvent.image}
+                              alt={subEvent.title}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent" />
+                          </div>
+                          <div className="p-6">
+                            <div className="flex items-center mb-3">
+                              <subEvent.icon className="w-6 h-6 text-blue-400 mr-3" />
+                              <h3 className="text-xl font-bold group-hover:text-blue-400 transition-colors">
+                                {subEvent.title}
+                              </h3>
+                            </div>
+                            <p className="text-blue-400/80 font-medium">
+                              {subEvent.shortDescription || "Learn more about this exciting event!"}  {/* Added fallback text */}
+                            </p>
+                            <div className="mt-4 flex items-center text-blue-400/60 group-hover:text-blue-400 transition-colors">
+                              <span>Learn More</span>
+                              <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                /* Past Events */
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {events.past.map((event) => (
+                    <div
+                      key={event.id}
+                      onClick={() => window.open("https://www.instagram.com/ccc_cbit/", "_blank")}
+                      className="group cursor-pointer"
+                    >
+                      <div className={`border border-blue-500/30 rounded-lg p-6
+                                    transform hover:scale-[1.02] transition-all duration-300
+                                    hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]
+                                    ${event.isCollab ? 'bg-gradient-to-br from-navy-800/80 to-blue-900/60' : 'bg-navy-800/60'} 
+                                    backdrop-blur-sm`}>
+                        {event.isCollab && (
+                          <div className="flex items-center mb-3">
+                            <span className="text-xs font-semibold px-2 py-1 rounded-full bg-blue-500/20 text-blue-300">
+                              COLLABORATION
+                            </span>
+                          </div>
+                        )}
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors">
+                          {event.title}
+                        </h3>
+                        <p className="text-blue-400/60 mb-2">{event.date}</p>
+                        <p className="text-blue-400/80">{event.description}</p>
+                        <div className="mt-4 flex items-center text-blue-400/60 group-hover:text-blue-400 transition-colors">
+                          <span>Learn More</span>
+                          <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </LampContainer>
         </div>
       </section>
 
       {/* Team Section */}
       <section id="team" className="py-32 fade-in">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-16 flex items-center glitch-text">
+          <h2 className="text-4xl font-bold mb-16 flex items-center justify-center glitch-text">
             <Users className="mr-2" /> Our Team
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 p-8">
+            <div className="md:col-span-4 flex justify-center">
+              {/* President in the center top */}
+              <div className="group w-64">
+                <div className="border border-blue-500/30 rounded-lg p-8 text-center bg-navy-800/70
+                              transform hover:scale-105 transition-all duration-300
+                              hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                  <div className="relative w-40 h-40 mx-auto mb-6">
+                    <div className="absolute inset-0 border-2 border-blue-500/30 rounded-full
+                                  group-hover:border-blue-500/60 transition-colors duration-300"></div>
+                    <img
+                      src="/president.png"
+                      alt="Manobhiram"
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors duration-300">
+                    Manobhiram
+                  </h3>
+                  <p className="text-blue-400/80">President</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Other team members in a row below */}
             {[
-              {
-                name: "Manobhiram",
-                role: "President",
-                image: "/president.png"
-              },
               {
                 name: "Gayatri",
                 role: "Vice President",
                 image: "/vicepresident.png"
-              },
-              {
-                name: "Raghupathi",
-                role: "General Secretary",
-                image: "/GS.png"
               },
               {
                 name: "Harshitha",
@@ -464,7 +607,6 @@ function App() {
                 role: "Treasurer",
                 image: "Treasurer.png"
               }
-
             ].map((member, index) => (
               <div key={index} className="group">
                 <div className="border border-blue-500/30 rounded-lg p-8 text-center bg-navy-800/70
@@ -490,43 +632,56 @@ function App() {
         </div>
       </section>
 
-      {/* Contact Section & Footer Combined */}
-      <section id="contact" className="py-20 bg-navy-900/50">
-        <div className="container mx-auto px-4 text-center">
+      {/* Contact Section */}
+      <section id="contact" className="py-32 fade-in">
+        <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold mb-12 flex items-center justify-center glitch-text">
-            <Mail className="mr-2" /> Contact Us
+            <Mail className="mr-2" /> Connect With Us
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
-            <div className="p-6 border border-blue-500/30 rounded-lg bg-navy-800/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all duration-300">
-              <Mail className="w-8 h-8 mb-4 mx-auto text-blue-400" />
-              <h3 className="text-xl font-bold mb-2">Email</h3>
-              <a href="mailto:contact@cbitcyber.club" className="text-blue-400/80 hover:text-blue-400 transition-colors">
-                contact@cbitcyber.club
-              </a>
-            </div>
-            <div className="p-6 border border-blue-500/30 rounded-lg bg-navy-800/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all duration-300">
-              <Terminal className="w-8 h-8 mb-4 mx-auto text-blue-400" />
-              <h3 className="text-xl font-bold mb-2">Discord</h3>
-              <a href="https://discord.gg/cbitcyber" target="_blank" rel="noopener noreferrer" className="text-blue-400/80 hover:text-blue-400 transition-colors">
-                Join our community
-              </a>
-            </div>
-            <div className="p-6 border border-blue-500/30 rounded-lg bg-navy-800/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all duration-300">
-              <Info className="w-8 h-8 mb-4 mx-auto text-blue-400" />
-              <h3 className="text-xl font-bold mb-2">Location</h3>
-              <p className="text-blue-400/80">
-                CBIT Campus, Room 42<br />
-                Cybersecurity Wing
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-blue-500/30 pt-8">
-            <p className="text-blue-500/60 hover:text-blue-400 transition-colors duration-300">
-              © 2024 CBIT Cyber Security Club. All rights reserved.
-            </p>
+          <div className="flex flex-col md:flex-row gap-8 justify-center items-center max-w-4xl mx-auto mb-12">
+            <a 
+              href="https://www.instagram.com/ccc_cbit/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="p-8 border border-blue-500/30 rounded-lg bg-navy-800/30 
+                       hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] 
+                       hover:bg-navy-800/50
+                       transform hover:scale-105
+                       transition-all duration-300 w-64 flex flex-col items-center"
+            >
+              <Instagram className="w-16 h-16 mb-6 text-pink-400" />
+              <h3 className="text-2xl font-bold mb-2">Instagram</h3>
+              <p className="text-blue-400/80 text-center">Follow us for updates and cybersecurity content</p>
+            </a>
+            
+            <a 
+              href="https://www.linkedin.com/company/cbit-cybersecurity-club/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="p-8 border border-blue-500/30 rounded-lg bg-navy-800/30 
+                       hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] 
+                       hover:bg-navy-800/50
+                       transform hover:scale-105
+                       transition-all duration-300 w-64 flex flex-col items-center"
+            >
+              <Linkedin className="w-16 h-16 mb-6 text-blue-500" />
+              <h3 className="text-2xl font-bold mb-2">LinkedIn</h3>
+              <p className="text-blue-400/80 text-center">Connect with us professionally</p>
+            </a>
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="py-8 bg-navy-900/50">
+        <div className="container mx-auto px-4">
+          <div className="border-t border-blue-500/30 pt-8 text-center">
+            <p className="text-blue-500/60 hover:text-blue-400 transition-colors duration-300">
+              © 2025 CBIT Cyber Security Club. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
 
       <style>{`
         .bg-gradient-text {
@@ -606,6 +761,26 @@ function App() {
             clip: rect(44px, 450px, 56px, 0);
             transform: skew(-0.5deg);
           }
+        }
+
+        /* New animation for team member cards */
+        @keyframes floatAnimation {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        
+        .group:hover {
+          animation: floatAnimation 3s ease-in-out infinite;
+        }
+        
+        /* Pulse animation for contact icons */
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+        
+        .text-pink-400, .text-blue-500 {
+          animation: pulse 2s ease-in-out infinite;
         }
       `}</style>
     </div>
