@@ -81,7 +81,9 @@ function App() {
           const dy = otherPoint.y - point.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 180) { // Increased connection distance
+          const maxDistance = window.innerWidth < 768 ? 100 : 180; // Reduced connection distance for mobile view
+
+          if (distance < maxDistance) { // Increased connection distance
             // Calculate opacity based on distance from mouse
             const mouseDistance = Math.sqrt(
               Math.pow(mouseX - point.x, 2) + Math.pow(mouseY - point.y, 2)
@@ -92,7 +94,7 @@ function App() {
 
             ctx.beginPath();
             ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
-            ctx.lineWidth = Math.max(0.5, 2 * (1 - distance / 180)); // Varying line width
+            ctx.lineWidth = Math.max(0.5, 2 * (1 - distance / maxDistance)); // Varying line width
             ctx.moveTo(point.x, point.y);
             ctx.lineTo(otherPoint.x, otherPoint.y);
             ctx.stroke();
@@ -189,7 +191,7 @@ function App() {
     setIsMenuOpen(false);
   };
 
-  const EventModal = ({ event, onClose }) => (
+  const EventModal = ({ event, subEvent, onClose }) => (
     <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-navy-900 border border-blue-500/30 rounded-lg max-w-2xl w-full">
         <div className="p-6">
@@ -205,22 +207,14 @@ function App() {
               <span>Back to Events</span>
             </button>
           </div>
-          <h3 className="text-3xl font-bold mb-4">{event.title}</h3>
+          <h3 className="text-3xl font-bold mb-4">{subEvent ? subEvent.title : event.title}</h3>
           <p className="text-blue-400/80 mb-6 text-lg">{event.date}</p>
           
-          {event.isCollab ? (
-            <div className="space-y-8 mb-8">
-              {event.subEvents.map((subEvent, index) => (
-                <div key={index} className="border border-blue-500/30 rounded-lg p-6 bg-navy-800/50">
-                  <div className="flex items-center mb-4">
-                    <subEvent.icon className="w-6 h-6 text-blue-400 mr-3" />
-                    <h4 className="text-xl font-bold">{subEvent.title}</h4>
-                  </div>
-                  <p className="text-blue-400/80 text-lg leading-relaxed">
-                    {subEvent.description}
-                  </p>
-                </div>
-              ))}
+          {subEvent ? (
+            <div className="prose prose-invert mb-8">
+              <p className="whitespace-pre-line text-blue-400/80 text-lg leading-relaxed">
+                {subEvent.description}
+              </p>
             </div>
           ) : (
             <div className="prose prose-invert mb-8">
@@ -249,7 +243,7 @@ function App() {
   return (
     <div className="min-h-screen bg-navy-900 text-white font-sans">
       {selectedEvent && (
-        <EventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+        <EventModal event={selectedEvent.event} subEvent={selectedEvent.subEvent} onClose={() => setSelectedEvent(null)} />
       )}
 
       {/* Navigation */}
@@ -361,9 +355,44 @@ function App() {
             <Calendar className="mr-2" /> Events
           </h2>
 
-          {/* Events Grid */}
+          {/* Highlighted Tectasy Events */}
+          <div className="mb-16">
+            <h3 className="text-5xl font-extrabold text-center mb-4 text-blue-400 animate-text-glow">
+              SUDHEE 2k25
+            </h3>
+            <h4 className="text-3xl font-bold text-center mb-8 text-blue-300">
+              CBITCCC X TECTASY 2k25
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {events.find(event => event.id === 'tectasy-2k25').subEvents.map((subEvent, index) => (
+                <div
+                  key={index}
+                  onClick={() => setSelectedEvent({ event: events.find(event => event.id === 'tectasy-2k25'), subEvent })}
+                  className="group cursor-pointer"
+                >
+                  <div className="border border-blue-500/30 rounded-lg p-6 bg-gradient-to-br from-navy-800/80 to-blue-900/60
+                                  transform hover:scale-[1.02] transition-all duration-300
+                                  hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] backdrop-blur-sm">
+                    <div className="flex items-center mb-3">
+                      <subEvent.icon className="w-6 h-6 text-blue-400 mr-3" />
+                      <h3 className="text-xl font-bold group-hover:text-blue-400 transition-colors">
+                        {subEvent.title}
+                      </h3>
+                    </div>
+                    <p className="text-blue-400/80">{subEvent.description}</p>
+                    <div className="mt-4 flex items-center text-blue-400/60 group-hover:text-blue-400 transition-colors">
+                      <span>Learn More</span>
+                      <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Other Events */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {events.map((event) => (
+            {events.filter(event => event.id !== 'tectasy-2k25').map((event) => (
               <div
                 key={event.id}
                 onClick={() => setSelectedEvent(event)}
@@ -372,7 +401,7 @@ function App() {
                 <div className={`border border-blue-500/30 rounded-lg p-6
                               transform hover:scale-[1.02] transition-all duration-300
                               hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]
-                              ${event.isCollab ? 'bg-gradient-to-br from-navy-800/50 to-blue-900/30' : 'bg-navy-800/30'} 
+                              ${event.isCollab ? 'bg-gradient-to-br from-navy-800/80 to-blue-900/60' : 'bg-navy-800/60'} 
                               backdrop-blur-sm`}>
                   {event.isCollab && (
                     <div className="flex items-center mb-3">
@@ -386,16 +415,6 @@ function App() {
                   </h3>
                   <p className="text-blue-400/60 mb-2">{event.date}</p>
                   <p className="text-blue-400/80">{event.description}</p>
-                  {event.isCollab && (
-                    <div className="mt-4 grid grid-cols-3 gap-2">
-                      {event.subEvents.map((subEvent, index) => (
-                        <div key={index} className="text-center">
-                          <subEvent.icon className="w-5 h-5 mx-auto mb-1 text-blue-400/60" />
-                          <span className="text-xs text-blue-400/60">{subEvent.title}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                   <div className="mt-4 flex items-center text-blue-400/60 group-hover:text-blue-400 transition-colors">
                     <span>Learn More</span>
                     <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
