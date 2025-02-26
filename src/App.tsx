@@ -40,7 +40,8 @@ function App() {
     };
 
     const createPoints = () => {
-      for (let i = 0; i < 150; i++) { // Increased number of points
+      const numPoints = window.innerWidth < 768 ? 50 : 150; // Reduced points for mobile view
+      for (let i = 0; i < numPoints; i++) {
         points.push({
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
