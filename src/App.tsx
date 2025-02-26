@@ -141,7 +141,7 @@ function App() {
         id: 'tectasy-2k25',
         title: "CCC × Tectasy 2k25",
         date: "March 4-5, 2024",
-        image: "/events/ctf.png", // Add event image
+        image: "/ctf.png", // Add event image
         description: "A three-day cybersecurity extravaganza featuring multiple challenging events.",
         isCollab: true,
         subEvents: [
@@ -160,7 +160,7 @@ function App() {
 • 🥇 Winner: ₹1500
 • 🥈 Runner-up: ₹500`,
             icon: Flag,
-            image: "/src/events/ctf.png" // Updated image path
+            image: "/ctf.png" // Updated image path
           },
           {
             title: "Spell The Box",
@@ -172,7 +172,7 @@ Registration Fee:
 
 Venue: Near Library Lane`,
             icon: Box,
-            image: "/src/events/spellbox.png" // Added image path
+            image: "/spellbox.png" // Added image path
           },
           {
             title: "Cyber Imposter",
@@ -186,7 +186,7 @@ Open to: 1st & 2nd Years
 Venue: IT Block (L Block)
 Date: March 4-5, 2024`,
             icon: Users2,
-            image: "/src/events/cyberimposter.png" // Added image path
+            image: "/cyberimposter.png" // Added image path
           }
         ],
         registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSddT-cmUEd8I4Q7N2RbSLIpFzlhi4VF2V9ZzKmIaQwtq4QweA/viewform"
@@ -198,7 +198,7 @@ Date: March 4-5, 2024`,
         title: "Debugging Duel",
         date: "October 3, 2024",
         description: "In a world full of threats… only the smartest will survive.",
-        image: "/events/debugging-duel.jpg", // Add an image if you have one
+        image: "/debugging-duel.jpg", // Add an image if you have one
         fullDescription: `Greetings from CCC!
 Get Ready for The *Debugging Duel* 🔐👨🏻‍💻
 Are you passionate about coding, cryptography, and cybersecurity? Then this is the challenge for you! 💻⚡
@@ -220,7 +220,7 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
         id: 'ethical-hacking',
         title: "Ethical Hacking Workshop",
         date: "January 15, 2024",
-        image: "/events/ethical-hacking.jpg",
+        image: "/ethical-hacking.jpg",
         description: "Learn the basics of ethical hacking and penetration testing.",
         fullDescription: `Join us for an intensive hands-on workshop on ethical hacking and penetration testing. 
         Learn from industry experts about:
@@ -489,6 +489,7 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
                         onClick={() => setSelectedEvent({ event: events.upcoming[0], subEvent })}
                       >
                         <div className="border border-blue-500/30 rounded-lg overflow-hidden bg-navy-800/60 h-full">
+                          {/* Content remains the same */}
                           <div className="h-48 relative">
                             <img
                               src={subEvent.image}
@@ -498,6 +499,7 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
                             <div className="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent" />
                           </div>
                           <div className="p-6">
+                            {/* Rest of the card content */}
                             <div className="flex items-center mb-3">
                               <subEvent.icon className="w-6 h-6 text-blue-400 mr-3" />
                               <h3 className="text-xl font-bold group-hover:text-blue-400 transition-colors">
@@ -505,7 +507,7 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
                               </h3>
                             </div>
                             <p className="text-blue-400/80 font-medium">
-                              {subEvent.shortDescription || "Learn more about this exciting event!"}  {/* Added fallback text */}
+                              {subEvent.shortDescription || "Learn more about this exciting event!"}
                             </p>
                             <div className="mt-4 flex items-center text-blue-400/60 group-hover:text-blue-400 transition-colors">
                               <span>Learn More</span>

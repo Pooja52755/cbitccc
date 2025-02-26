@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-export const GlitchCard = ({ children, className = "" }) => {
+export const GlitchCard = ({ children, className = "", onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isGlitching, setIsGlitching] = useState(false);
 
@@ -70,6 +70,7 @@ export const GlitchCard = ({ children, className = "" }) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
       className={`transform-gpu ${className}`}
     >
       {children}
