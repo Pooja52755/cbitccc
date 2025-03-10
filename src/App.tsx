@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, Users, Calendar, Info, Mail, ChevronRight, Shield, ExternalLink, Menu, X, ArrowLeft, Box, Users2, Instagram, Linkedin } from 'lucide-react';
 import { LampContainer } from './components/ui/lamp';
@@ -139,10 +140,6 @@ function App() {
     setTimeout(() => {
       console.log("%cDebug: Initializing system...", "color: #64748b");
     }, 2000);
-    
-    setTimeout(() => {
-      console.log("%cDebug: flag{js_console_flag}", "color: #64748b; font-size: 1px;");
-    }, 3000);
     
     setTimeout(() => {
       console.log("%cDebug: All systems operational", "color: #64748b");
@@ -347,63 +344,12 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
 
   return (
     <div className="min-h-screen bg-navy-900 text-white font-sans">
-      {/* Inspect Element Flag */}
-      <div aria-hidden="true" className="security-debug">
-        <div className="debug-layer-1" data-security="check-1">
-          {/* ASCII Values: Try to decode me! */}
-          &nbsp;
-        </div>
-        <div className="debug-layer-2" data-security="check-2" data-ascii="102 108 97 103 123 104 116 109 108 95 101 120 112 111 115 101 100 125">
-          {/* Convert ASCII to text to find the flag */}
-          &nbsp;
-        </div>
-      </div>
-
-      {/* Enhanced Source Code Flag Implementation */}
-      {/* 
-        =============================================
-        WEBSITE CONFIGURATION - DEVELOPMENT ONLY
-        =============================================
-        
-        TODO: Remove before production deployment
-        IMPORTANT: Keep these values secure!
-        
-        Environment Variables:
-        ---------------------
-        API_KEY=********
-        DEBUG_MODE=true
-        ENV=development
-        
-        <!-- Looking for something? This might help:
-             flag{source_code_secret}
-        -->
-        
-        Security Settings:
-        -----------------
-        - SSL: Enabled
-        - Firewall: Active
-        - Backup: Daily
-        - Monitoring: 24/7
-        
-        =============================================
-      */}
-
       {selectedEvent && (
         <EventModal event={selectedEvent.event} subEvent={selectedEvent.subEvent} onClose={() => setSelectedEvent(null)} />
       )}
 
       {/* Navigation */}
       <div className="fixed top-0 left-0 right-0 p-4 z-50">
-        {/* Source code secrets are often hidden in plain sight */}
-        {/* Try checking the page source (Ctrl+U) */}
-        {/* 
-          ===============[ SECURITY CHECK ]===============
-          Status: Development Mode
-          Version: 1.0.0
-          Last Updated: 2024-03
-          Security Level: flag{source_code_secret}
-          =============================================
-        */}
         <nav className="max-w-6xl mx-auto bg-navy-800 rounded-full px-6 py-3 shadow-lg border border-blue-500/20">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 group cursor-pointer">
@@ -759,9 +705,8 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
             <p className="text-blue-500/60 hover:text-blue-400 transition-colors duration-300">
               © 2025 CBIT Cyber Security Club. All rights reserved.
             </p>
-            {/* Base64 encoded flag */}
-            <p className="text-xs text-blue-500/30 mt-2 encoded-text" title="What's this strange text? Looks encoded...">
-              ZmxhZ3tiYXNlNjRfdGhpcyF9
+            <p className="text-xs text-blue-500/30 mt-2">
+              © 2025 CBIT Cyber Security Club
             </p>
           </div>
         </div>
@@ -952,46 +897,6 @@ The Debugging Duel is here to test your coding, cryptography, and debugging skil
           font-weight: bold;
           animation: matrix-rain 8s linear infinite;
         }
-
-        /* Hint for inspect element flag */
-        .debug-element {
-          /* Flag hidden in CSS */
-          content: "Look closer at the HTML";
-        }
-
-        /* Hint for encoded text */
-        .encoded-text {
-          font-family: monospace;
-          letter-spacing: 2px;
-        }
-
-        /* Add glitch effect to encoded text on hover */
-        .encoded-text:hover {
-          animation: glitch 0.3s infinite;
-        }
-
-        /* Security Layer 1 - Do not modify */
-        .security-debug {
-          position: absolute;
-          visibility: hidden;
-          opacity: 0;
-          pointer-events: none;
-        }
-        
-        /* Security Layer 2 - System critical */
-        .debug-element {
-          --flag: 'Try harder...';
-          --debug: 'Almost there...';
-          --data: '${btoa("flag{html_exposed}")}';
-        }
-        
-        /* Security Layer 3 - Restricted access */
-        .hex-data::after {
-          content: attr(data-value);
-          display: none;
-        }
-        
-        /* Flag Location: Decode hex from data-debug attribute */
       `}</style>
     </div>
   );
