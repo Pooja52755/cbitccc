@@ -15,7 +15,7 @@ export const TerminalInteraction = () => {
 
   const commands = {
     help: 'Available commands: help, about, clear, events, team, contact, hack',
-    about: 'CBIT Cyber Security Club (CCC) is dedicated to promoting cybersecurity awareness and skills development.',
+    about: "The CBIT Cyber Security Club (CCC) is dedicated to advancing cybersecurity awareness and skill development."
     events: 'Current events: Debugging Duel, CTF Challenge, Spell The Box, Cyber Imposter',
     team: 'Team: Manobhiram (President), Gayatri (Vice President), and other dedicated members',
     contact: 'Follow us: Instagram: @ccc_cbit, LinkedIn: CBIT Cybersecurity Club',
